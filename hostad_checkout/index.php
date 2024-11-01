@@ -78,7 +78,7 @@ $sessionid = explode("=", explode("&", $result)[2])[1];
 <script type="text/javascript">
     function errorCallback(error) {
         alert("Error:" + JSON.stringify(error));
-        window.location.href = "http://cmbgateway.loc/config/inooooooooooooooooooodex.php"
+        window.location.href = "http://cmbgateway.loc/config/index.php"
 
     }
 
