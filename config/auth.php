@@ -37,6 +37,6 @@ if (isset($_POST['simplifyToken'])) {
     $status = 'ERROR';
 }
 
-header("Location: ../index.php?status=$status&message=" . urlencode($notificationMessage));
+header("Location:../paymentpage.php?status=$status&message=" . urlencode($notificationMessage));
 exit();
 ?>

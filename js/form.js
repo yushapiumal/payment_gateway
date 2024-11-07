@@ -70,10 +70,10 @@ $("#amount").on("input", function () {
 function validateCardNumber(value) {
   const messageElement = $("#card_number_msg");
   if (value.length === 16) {
-    messageElement.text("Valid card number").css("color", "green");
+    messageElement.text("Valid digits count ").css("color", "green");
     $("#card_number").removeClass("invalid").addClass("valid");
   } else {
-    messageElement.text("Invalid card number").css("color", "red");
+    messageElement.text("Enter 16 digits card number").css("color", "red");
     $("#card_number").removeClass("valid").addClass("invalid");
   }
 }
