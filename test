@@ -1,35 +1,129 @@
 
-Card Number	Card Type	Payment Status	Refund Status
+# Card Number	Card Type	Payment Status	Refund Status
 
 
-2222 4053 4324 8877	MasterCard	APPROVED	APPROVED
-2222 9909 0525 7051	MasterCard	APPROVED	APPROVED
-2223 0076 4872 6984	MasterCard	APPROVED	APPROVED
-2223 5771 2001 7656	MasterCard	APPROVED	APPROVED
-5105 1051 0510 5100	MasterCard	APPROVED	APPROVED
-5111 0100 3017 5156	MasterCard	APPROVED	APPROVED
-5185 5408 1000 0019	MasterCard	APPROVED	APPROVED
-5200 8282 8282 8210	MasterCard	APPROVED	APPROVED
-5204 2300 8000 0017	MasterCard	APPROVED	APPROVED
-5204 7400 0990 0014	MasterCard	APPROVED	APPROVED
-5420 9238 7872 4339	MasterCard	APPROVED	APPROVED
-5455 3307 6000 0018	MasterCard	APPROVED	APPROVED
-5506 9004 9000 0436	MasterCard	APPROVED	APPROVED
-5506 9004 9000 0444	MasterCard	APPROVED	APPROVED
-5506 9005 1000 0234	MasterCard	APPROVED	APPROVED
-5506 9208 0924 3667	MasterCard	APPROVED	APPROVED
-5506 9224 0063 4930	MasterCard	APPROVED	APPROVED
-5506 9274 2731 7625	MasterCard	APPROVED	APPROVED
-5553 0422 4198 4105	MasterCard	APPROVED	APPROVED
-5555 5537 5304 8194	MasterCard	APPROVED	APPROVED
-5555 5555 5555 4444	MasterCard	APPROVED	APPROVED
-4012 8888 8888 1881	Visa	APPROVED	APPROVED
-4111 1111 1111 1111	Visa	APPROVED	APPROVED
-6011 0009 9013 9424	Discover	APPROVED	APPROVED
-6011 1111 1111 1117	Discover	APPROVED	APPROVED
-3714 496353 98431	American Express	APPROVED	APPROVED
-3782 822463 10005	American Express	APPROVED	APPROVED
-3056 9309 0259 04	Diners	APPROVED	APPROVED
-3852 0000 0232 37	Diners	APPROVED	APPROVED
-3530 1113 3330 0000	JCB	APPROVED	APPROVED
-3566 0020 2036 0505	JCB	APPROVED	APPROVED
+# 2222 4053 4324 8877	MasterCard	APPROVED	APPROVED
+# 2222 9909 0525 7051	MasterCard	APPROVED	APPROVED
+# 2223 0076 4872 6984	MasterCard	APPROVED	APPROVED
+# 2223 5771 2001 7656	MasterCard	APPROVED	APPROVED
+# 5105 1051 0510 5100	MasterCard	APPROVED	APPROVED
+# 5111 0100 3017 5156	MasterCard	APPROVED	APPROVED
+# 5185 5408 1000 0019	MasterCard	APPROVED	APPROVED
+# 5200 8282 8282 8210	MasterCard	APPROVED	APPROVED
+# 5204 2300 8000 0017	MasterCard	APPROVED	APPROVED
+# 5204 7400 0990 0014	MasterCard	APPROVED	APPROVED
+# 5420 9238 7872 4339	MasterCard	APPROVED	APPROVED
+# 5455 3307 6000 0018	MasterCard	APPROVED	APPROVED
+# 5506 9004 9000 0436	MasterCard	APPROVED	APPROVED
+# 5506 9004 9000 0444	MasterCard	APPROVED	APPROVED
+# 5506 9005 1000 0234	MasterCard	APPROVED	APPROVED
+# 5506 9208 0924 3667	MasterCard	APPROVED	APPROVED
+# 5506 9224 0063 4930	MasterCard	APPROVED	APPROVED
+# 5506 9274 2731 7625	MasterCard	APPROVED	APPROVED
+# 5553 0422 4198 4105	MasterCard	APPROVED	APPROVED
+# 5555 5537 5304 8194	MasterCard	APPROVED	APPROVED
+# 5555 5555 5555 4444	MasterCard	APPROVED	APPROVED
+# 4012 8888 8888 1881	Visa	APPROVED	APPROVED
+# 4111 1111 1111 1111	Visa	APPROVED	APPROVED
+# 6011 0009 9013 9424	Discover	APPROVED	APPROVED
+# 6011 1111 1111 1117	Discover	APPROVED	APPROVED
+# 3714 496353 98431	American Express	APPROVED	APPROVED
+# 3782 822463 10005	American Express	APPROVED	APPROVED
+# 3056 9309 0259 04	Diners	APPROVED	APPROVED
+# 3852 0000 0232 37	Diners	APPROVED	APPROVED
+# 3530 1113 3330 0000	JCB	APPROVED	APPROVED
+# 3566 0020 2036 0505	JCB	APPROVED	APPROVED
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+# session_start();
+# require_once("../lib/Simplify.php");
+# //require 'vendor/autoload.php';  
+
+# use PHPMailer\PHPMailer\PHPMailer;
+# use PHPMailer\PHPMailer\Exception;
+
+# Simplify::$publicKey = 'sbpb_NjU0NWMyMjMtMzVmYi00ZWVjLWI0NDItN2I4MjljZWJiM2I0';
+# Simplify::$privateKey = '5Hsh1LbHPktNOcWZ0ZBwUQADlyquDfSmiPMwX7qxrzd5YFFQL0ODSXAOkNtXTToq';
+
+# $notificationMessage = '';
+
+# if (isset($_POST['simplifyToken'])) {
+#     $token = $_POST['simplifyToken'];
+
+#     if (isset($_POST['price'])) {
+#         $price = $_POST['price'];
+#         $amount = intval($price * 100);
+#     } else {
+#         $amount = 1000;
+#     }
+
+#     $currency = 'USD';
+#     $reference = uniqid();
+#     $email = $_POST['email']; 
+
+#     try {
+#         $payment = Simplify_Payment::createPayment(array(
+#             'reference' => $reference,
+#             'amount' => $amount,
+#             'description' => 'payment description',
+#             'currency' => $currency,
+#             'token' => $token,
+#         ));
+
+#         if ($payment->paymentStatus == 'APPROVED') {
+#             $notificationMessage = 'Payment Approved! Thank you for your purchase!';
+#             $status = 'APPROVED';
+
+            
+#             $mail = new PHPMailer(true); 
+#             try {
+#                 $mail->isSMTP();  
+#                 $mail->Host = 'smtp.gmail.com';  
+#                 $mail->SMTPAuth = true;  
+#                 $mail->Username = 'piumal0713@gmail.com'; 
+#                 $mail->Password = 'your_password_here'; 
+#                 $mail->SMTPSecure = 'tls'; 
+#                 $mail->Port = 587; 
+
+               
+#                 $mail->setFrom('piumal0713@gmail.com', 'Yushan');
+#                 $mail->addAddress($email); 
+
+            
+#                 $mail->isHTML(false); 
+#                 $mail->Subject = "Payment Confirmation";
+#                 $mail->Body    = "Dear Customer,\n\nYour payment of $" . $price . " has been successfully approved.\n\nThank you for your purchase!";
+
+#                 $mail->send();
+#             } catch (Exception $e) {
+               
+#                 $notificationMessage .= ' However, we couldn\'t send a confirmation email: ' . htmlspecialchars($mail->ErrorInfo);
+#             }
+
+#         } else {
+#             $notificationMessage = 'Payment Failed: ' . htmlspecialchars($payment->paymentStatus);
+#             $status = 'FAILED';
+#         }
+#     } catch (Exception $e) {
+#         $notificationMessage = 'Payment Error: ' . htmlspecialchars($e->getMessage());
+#         $status = 'ERROR';
+#     }
+# } else {
+#     $notificationMessage = 'No Payment Token Found. Please try again.';
+#     $status = 'ERROR';
+# }
+
+# header("Location:../paymentpage.php?status=$status&message=" . urlencode($notificationMessage));
+# exit();

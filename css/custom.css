@@ -1,13 +1,12 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f7f7f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
 
+#paymentFormContainer
+{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+/* width:; */
+}
 .payment-form {
   width: auto;
   height: auto;
@@ -53,7 +52,7 @@ body {
   color: white;
   border: none;
   cursor: pointer;
-  margin-left: 8px;
+  
 }
 
 .form-group input[type="submit"]:hover {
@@ -75,14 +74,14 @@ body {
 
 .logos img {
   height: 30px;
-  width: 150px;
+  width: 120px;
 }
 
 .header_logo {
   display: block;
   margin: 0 auto 20px;
-  width: 460px;
-  max-width: 100%;
+ 
+  max-width:75%;
   height: auto;
 }
 
@@ -99,9 +98,10 @@ body {
 }
 
 .form-group-inline {
+  justify-content: center;
   display: flex;
-  gap: 20px;
-  align-items: flex-end;
+  gap: 37px;
+ 
 }
 
 .form-group-inline .form-group {
@@ -110,11 +110,6 @@ body {
 
 .payment-form select {
   margin-right: 5px;
-}
-.form-group-inline {
-  display: flex;
-  gap: 20px;
-  align-items: flex-end;
 }
 
 .form-group-inline .form-group {

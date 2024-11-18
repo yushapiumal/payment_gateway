@@ -1,6 +1,14 @@
 <?php
 session_start();
+
+
+// Fetch URL parameters
+$status = isset($_GET['status']) ? htmlspecialchars($_GET['status']) : null;
+$message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : null;
+$email = isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '';
+$price = isset($_GET['price']) ? htmlspecialchars($_GET['price']) : '';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,97 +19,109 @@ session_start();
     <title>Payment Form</title>
     <link rel="stylesheet" href="css/custom.css">
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 
-<body>
-    <div class="payment-form">
-        <img class="header_logo" src="assets/combank.png" alt="Acquiring Bank Logo">
-        <h2 class="profile-name-card">COMBANK MPGS Payment Gateway</h2>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen ">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg m-6">
+        <img class="mx-auto mb-4" src="assets/combank.png" alt="Acquiring Bank Logo" style="max-width:250px; height:60px;">
+        <h2 class="text-xl font-semibold text-center mb-6">COMBANK MPGS Payment Gateway</h2>
 
         <div id="paymentFormContainer">
             <form id="paymentForm" action="config/auth.php" method="POST">
-                <div class="form-group">
-                    <label>Credit Card Number: </label>
-                    <input id="card_number" type="text" maxlength="20" autocomplete="off" required autofocus />
-                    <span class="validation-message" id="card_number_msg"></span>
-                </div>
-
-                <div class="form-group-_inline">
-                    <div class="flex space-x-4">
-                        <div class="form-group w-1/2 p-4">
-                            <label>Expiry Date: </label>
-                            <div class="flex space-x-4">
-                                <select id="cc-exp-month" class="form-group" required>
-                                    <option value="">Month</option>
-                                    <option value="01">Jan</option>
-                                    <option value="02">Feb</option>
-                                    <option value="03">Mar</option>
-                                    <option value="04">Apr</option>
-                                    <option value="05">May</option>
-                                    <option value="06">Jun</option>
-                                    <option value="07">Jul</option>
-                                    <option value="08">Aug</option>
-                                    <option value="09">Sep</option>
-                                    <option value="10">Oct</option>
-                                    <option value="11">Nov</option>
-                                    <option value="12">Dec</option>
-                                </select>
-                                <select id="cc-exp-year" class="form-group" required>
-                                    <option value="">Year</option>
-                                    <option value="23">2023</option>
-                                    <option value="24">2024</option>
-                                    <option value="25">2025</option>
-                                    <option value="26">2026</option>
-                                    <option value="27">2027</option>
-                                    <option value="28">2028</option>
-                                    <option value="29">2029</option>
-                                    <option value="30">2030</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group w-1/2 p-4">
-                            <label>CVV: </label>
-                            <input id="cvv" type="text" maxlength="4" autocomplete="off" required />
-                            <span class="validation-message" id="cvv_msg"></span>
-                        </div>
+                <!-- Email and Amount in One Row -->
+                <div class="flex space-x-4 mb-6">
+                    <div class="w-1/2">
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+                        <input type="email" id="email" name="email"
+                            value="<?= isset($_GET['email']) ? htmlspecialchars($_GET['email']) : '' ?>"
+                            required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2" />
+                        <span class="validation-message text-red-500 text-xs mt-1" id="emailError"></span>
                     </div>
-                    <span class="validation-message" id="expiry_year_msg"></span>
-
-                    <div class="form-group">
-                        <input type="submit" value="Pay Now">
-                    </div>
-
-                    <div class="logos">
-                        <img src="assets/all.jpg" alt="Acquiring Bank Logo">
-                        <img src="assets/card_acceptancelogo.jpg" alt="Card Acceptance Logo">
-                        <img src="assets/combank.png" alt="Authentication Logo">
+                    <div class="w-1/2">
+                        <label for="price" class="block text-sm font-medium text-gray-700">Amount (USD):</label>
+                        <input type="text" name="price" id="price"
+                            value="<?= isset($_GET['price']) ? htmlspecialchars($_GET['price']) : '' ?>"
+                            required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2" />
                     </div>
                 </div>
+
+                <!-- Credit Card Number, Expiry Date, and CVV in One Row -->
+                <div class="flex space-x-4 mb-6">
+                    <!-- Credit Card Number Field -->
+                    <div class="w-full">
+                        <label for="card_number" class="block text-sm font-medium text-gray-700">Credit Card Number:</label>
+                        <input id="card_number" name="card_number" type="text" maxlength="20" autocomplete="off" required autofocus
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2" />
+                        <span class="validation-message text-red-500 text-xs mt-1" id="card_number_msg"></span>
+                    </div>
+                </div>
+
+                <!-- Expiry Date Section -->
+                <div class="flex space-x-4 mb-6">
+                    <div class="w-full">
+                        <label for="cc-exp-month" class="block text-sm font-medium text-gray-700">Expiry Date:</label>
+                        <div class="flex space-x-4">
+                            <select id="cc-exp-month" name="exp_month" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+                                <option value="">Month</option>
+                                <?php for ($i = 1; $i <= 12; $i++): ?>
+                                    <option value="<?= str_pad($i, 2, '0', STR_PAD_LEFT) ?>"><?= date('M', mktime(0, 0, 0, $i, 1)) ?></option>
+                                <?php endfor; ?>
+                            </select>
+                            <select id="cc-exp-year" name="exp_year" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2">
+                                <option value="">Year</option>
+                                <?php for ($year = date('Y'); $year <= date('Y') + 10; $year++): ?>
+                                    <option value="<?= substr($year, -2) ?>"><?= $year ?></option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- CVV Section -->
+                    <div class="">
+                        <label for="cvv" class="block text-sm font-medium text-gray-700">CVV:</label>
+                        <input id="cvv" name="cvv" type="text" maxlength="4" autocomplete="off" required
+                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2" />
+                        <span class="validation-message text-red-500 text-xs mt-1" id="cvv_msg"></span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-6">
+                    <input type="submit" value="Pay Now"
+                        class="w-full bg-blue-600 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200 cursor-pointer" />
+                </div>
+
+                <!-- Logos -->
+                <div class="logos flex flex-wrap justify-center gap-4">
+                    <img src="assets/all.jpg" alt="" class="max-w-full sm:w-auto">
+                    <img src="assets/card_acceptancelogo.jpg" alt="" class="max-w-full sm:w-auto">
+                    <img src="assets/combank.png" alt="" class="max-w-full sm:w-auto">
+                </div>
+
             </form>
         </div>
 
-
-
-        <div id="notificationMessage" class="w-full max-w-md p-4 bg-white rounded-lg  hidden">
-            <div class="mb-4">
-                <p class="text-center text-lg font-semibold" id="messageText"></p>
-            </div>
-            <div class="text-center">
-                <a href="/" class="px-6 py-3 text-white font-semibold bg-gradient-to-r  from-green-500 to-blue-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition duration-300 ease-in-out hover:scale-105">
-                    Return to Home
-                </a>
-
-            </div>
+        <!-- Notification Message -->
+        <div id="notificationMessage" class="
+            w-full max-w-md p-4 bg-white rounded-lg hidden shadow-lg mt-6 mx-auto">
+            <p class="
+            text-center text-lg font-semibold"
+                id='messageText'></p>
+            <a href="/"
+                class="
+               block mt-4 px-6 py-3 text-white font-semibold bg-gradient-to-r from-green-500 to-blue-500 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition duration-300 ease-in-out hover:scale-105
+               text-center">Return to Home</a>
         </div>
-
     </div>
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/form.js"></script>
-    <script type="text/javascript" src="https://www.simplify.com/commerce/v1/simplify.js"></script>
+    <!-- Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='js/form.js'></script>
+    <script src="//www.simplify.com/commerce/v1/simplify.js"></script>
 
+    <!-- Handle URL Parameters -->
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const status = urlParams.get('status');
@@ -118,11 +138,9 @@ session_start();
                 $('#messageText').addClass('text-red-500');
             }
 
-
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     </script>
-
 
 </body>
 
